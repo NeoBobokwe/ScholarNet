@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet - View Subjects and Materials</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('images/ScholarNetLogo.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-attachment: fixed; 
+        }
+        nav {
+            text-align: right;
+            background-color: darkcyan;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        a:active {    
+            color: powderblue;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 5px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            font-style: oblique;
+        }
+        #container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 250px;
+            height: auto;
+        }
+        .header, .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .header h1, .footer p {
+            margin: 0;
+        }
+        .footer p {
+            font-size: 14px;
+        }
+        h1 {
+            text-align: left;
+            font-style: oblique;
+            font-size: 20px;
+        }
+        .subjects-page h2 {
+            margin-top: 20px;
+        }
+        .subject-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: left; 
+        }
+        .subject-list li {
+            margin: 10px 0;
+        }
+        .subject-list a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.2s, color 0.2s;
+            display: block; 
+        }
+        .subject-list a:hover {
+            background: #333;
+            color: #fff;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button-container button {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin: 5px;
+        }
+        .button-container button:hover {
+            background-color: darkslategray;
+        }
+    </style>
+</head>
+<body>
+    <!-- <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo"> -->
+    <h1>ScholarNet.</h1>
+    <nav>
+        <font face="conzel">
+            <a href="ViewGrades.html">View Grades</a> || 
+            <a href="ViewDownloads.html">View Materials</a> || 
+            <a href="Tutorials.html">Tutorials</a> || 
+            <a href="AboutUs.html">About Us</a> || 
+            <a href="Register.html">Login/Register</a> 
+        </font>
+    </nav>
+    <div id="container">
+        <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
+        <div id="subjects-page" class="Subjects-page">
+            <h2>Subject Materials for Grade <span id="selected-grade"></span></h2>
+            <p>Welcome! <br>Subject Materials:</p>
+            <ul id="subject-list" class="subject-list"></ul>
+            <div class="button-container">
+                <button id="back-to-grades">Back to Grades</button>
+                <button id="view-downloads">View all Materials</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
+    </div>
+    
+    <script>
+        // Retrieve grade parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const grade = urlParams.get('grade');
+
+        // Display selected grade
+        document.getElementById('selected-grade').textContent = grade;
+
+        const pdfs = {
+            '8': ['pdfs/Grade 8 English FAL P2 2017.pdf', 'pdfs/Grade 8 English HL P1 November 2017 Memo.pdf', 'pdfs/Grade 8 English HL P1 November 2017 nov.pdf', 'pdfs/Grade 8 English HL P2 June 2017 Memo.pdf', 'pdfs/Grade 8 English HL P2 June 2017.pdf', 'pdfs/Grade 8 Geo  June 2019 Memo.pdf', 'pdfs/Grade 8 Geo  June 2019.pdf', 'pdfs/Grade 8 Geo November 2016 Memo.pdf', 'pdfs/Grade 8 Geo November 2016.pdf', 'pdfs/Grade 8 Maths June 2019 Memo.pdf', 'pdfs/Grade 8 Maths June 2019.pdf'],
+            '9': ['pdfs/Grade 9 MATH (ENG & AFR) June 2022 Memo.pdf', 'pdfs/Grade 9 MATH (ENG) June 2022.pdf', 'pdfs/Grade 9 Math P1 (Eng and Afr) November 2022 Memo.pdf', 'pdfs/Grade 9 Math P1 (Eng) November 2022.pdf', 'pdfs/Grade 9 November Eng P2 2018 EC.pdf', 'pdfs/Grade 9 November Eng P2 2018 Memo EC.pdf', 'pdfs/Grade 9 November Eng P2 2019 EC.pdf', 'pdfs/Grade 9 November Eng P2 2019 Memo EC.pdf', 'pdfs/Grade 9 NS (ENG) June 2022 Memo.pdf', 'pdfs/Grade 9 NS (ENG) June 2022.pdf', 'pdfs/Grade 9 NS (English) November 2022 Memo.pdf', 'pdfs/Grade 9 NS (English) November 2022.pdf' ],
+            '10': ['pdfs/Grade 10 Accounting P1 (English) 2023 Memo.pdf', 'pdfs/Grade 10 Accounting P1 (English) 2023.pdf', 'pdfs/Grade 10 Accounting P2 (English) November 2022 Memo.pdf', 'pdfs/Grade 10 Accounting P2 (English) November 2022.pdf', 'pdfs/Grade 10 MATH P1 (ENG) June 2022 Memo.pdf', 'pdfs/Grade 10 MATH P1 (ENG) June 2022.pdf', 'pdfs/Grade 10 MATH P2 (ENG & AFR) June 2022 Memo.pdf', 'pdfs/Grade 10 MATH P2 (ENG) June 2022.pdf', 'pdfs/Grade 10 PS P1 (English) November 2022 Memo.pdf', 'pdfs/Grade 10 PS P1 (English) November 2022.pdf', 'pdfs/Grade 10 PS P2 (English)  2023 Memo.pdf', 'pdfs/Grade 10 PS P2 (English)  2023.pdf']
+        };
+
+        // Retrieve PDFs for the selected grade
+        const selectedPdfs = pdfs[grade] || [];
+
+        // Display PDFs in list form
+        const subjectList = document.getElementById('subject-list');
+        selectedPdfs.forEach(pdf => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = pdf;
+            link.textContent = pdf.split('/').pop(); 
+            listItem.appendChild(link);
+            subjectList.appendChild(listItem);
+        });
+
+        document.getElementById('back-to-grades').addEventListener('click', function() {
+            window.location.href = 'ViewGrades.html';
+        });
+        document.getElementById('view-downloads').addEventListener('click', function() {
+            window.location.href = 'ViewDownloads.html';
+        });
+    </script>
+</body>
+</html>

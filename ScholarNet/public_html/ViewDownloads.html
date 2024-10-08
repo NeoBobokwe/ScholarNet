@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet - View Downloads</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('images/ScholarNetLogo.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-attachment: fixed; 
+        }
+        nav {
+            text-align: right;
+            background-color: darkcyan;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        a:active {    
+            color: powderblue;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 5px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            font-style: oblique;
+        }
+        #container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 250px;
+            height: auto;
+        }
+        .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .footer p {
+            font-size: 14px;
+        }
+        .header h1, .footer p {
+            margin: 0;
+        }
+        h1 {
+            text-align: left;
+            font-style: oblique;
+            font-size: 20px;
+        }
+        .downloads-page h2 {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .downloads-page p {
+            text-align: center;
+        }
+        .download-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: left; 
+        }
+        .download-list li {
+            margin: 10px 0;
+        }
+        .download-list a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            border: 2px solid #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.2s, color 0.2s;
+            display: block; 
+        }
+        .download-list a:hover {
+            background: #333;
+            color: #fff;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container button {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin: 5px;
+        }
+        .button-container button:hover {
+            background-color: darkslategray;
+        }
+    </style>
+</head>
+<body>
+    <!-- <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo"> -->
+    <h1>ScholarNet.</h1>
+    <nav>
+        <font face="conzel">
+            <a href="ViewGrades.html">View Grades</a> || 
+            <a href="ViewDownloads.html">View Materials</a> || 
+            <a href="Tutorials.html">Tutorials</a> || 
+            <a href="AboutUs.html">About Us</a> || 
+            <a href="Register.html">Login/Register</a> 
+        </font>
+    </nav>
+    <div id="container">
+        <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
+        <div id="downloads-page" class="downloads-page">
+            <h2>All Materials</h2>
+            <p>Welcome! <br>List of All Materials:</p>
+            <ul id="download-list" class="download-list"></ul>
+            <div class="button-container">
+                <button id="back-to-grades-from-downloads">Back to Grades</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
+    </div>
+
+    <script src="pdfList.js"></script>
+    <script>
+        pdfFiles.sort(function(a, b) {
+            return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
+        });
+
+        // Display PDF filenames in list form
+        const downloadList = document.getElementById('download-list');
+        pdfFiles.forEach(filename => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = 'PDFs/' + filename; 
+            link.textContent = filename;
+            listItem.appendChild(link);
+            downloadList.appendChild(listItem);
+        });
+
+        // Back to Grades button functionality
+        document.getElementById('back-to-grades-from-downloads').addEventListener('click', function() {
+            window.location.href = 'ViewGrades.html';
+        });
+    </script>
+</body>
+</html>

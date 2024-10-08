@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('images/ScholarNetLogo.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-attachment: fixed;   
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 250px;
+            height: auto;
+        }
+        .header, .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+        .header h1, .footer p {
+            margin: 0;
+        }
+        .footer p {
+            font-size: 14px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"], input[type="reset"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: darkcyan;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: darkslategray;
+        }
+        fieldset {
+            border: none;
+            padding: 0;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-container p {
+            margin-top: 20px;
+        }
+        .form-container p a {
+            color: darkcyan;
+            text-decoration: none;
+        }
+        .form-container p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function loginValidate(event) {
+            event.preventDefault(); // Prevent form submission
+            var username = document.getElementById("login-username").value;
+            var password = document.getElementById("login-password").value;
+            if (!username || !password) {
+                alert("Please fill in the blank fields");
+            } else {
+                window.location.href = "ViewGrades.html";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to ScholarNet</h1>
+    </div>
+    <div id="container">
+        <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
+        <!-- Login Page -->
+        <div id="login-page" class="Login-page">
+            <h2>Login</h2>
+            <form id="login-form" onsubmit="loginValidate(event)">
+                <fieldset>
+                    <legend>Login Form</legend>
+                    <label for="login-username">Username:</label>
+                    <input id="login-username" type="text" name="Username" required><br><br>
+                    <label for="login-password">Password:</label>
+                    <input id="login-password" type="password" name="password" required><br><br>
+                    <input type="submit" value="Login">
+                    <input type="reset" name="Reset" value="Reset">
+                </fieldset>
+            </form>
+            <p>Don't have an account? <a href="Register.html" id="show-register">Register here</a></p>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
+    </div>
+</body>
+</html>

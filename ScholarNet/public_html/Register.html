@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet - Registration</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('images/ScholarNetLogo.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-attachment: fixed;   
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 250px;
+            height: auto;
+        }
+        .header, .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+        .header h1, .footer p {
+            margin: 0;
+        }
+        .footer p {
+            font-size: 14px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"], input[type="reset"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: darkcyan;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover, input[type="reset"]:hover {
+            background-color: darkslategray;
+        }
+        fieldset {
+            border: none;
+            padding: 0;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-container p {
+            margin-top: 20px;
+        }
+        .form-container p a {
+            color: darkcyan;
+            text-decoration: none;
+        }
+        .form-container p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function registerValidate(event) {
+            event.preventDefault(); // Prevent form submission
+            var firstName = document.getElementById("login-FName").value;
+            var lastName = document.getElementById("login-LName").value;
+            var username = document.getElementById("register-username").value;
+            var password = document.getElementById("register-password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+            if (!firstName || !lastName || !username || !password || !confirmPassword) {
+                alert("Please fill in all fields");
+            } else if (password !== confirmPassword) {
+                alert("Passwords do not match");
+            } else {
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to ScholarNet</h1>
+    </div>
+    <div id="container">
+        <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
+        <!-- Registration Page -->
+        <div id="register-page" class="Registration-page form-container">
+            <h2>Register</h2>
+            <form id="register-form" onsubmit="registerValidate(event)">
+                <fieldset>
+                    <legend>Registration Form</legend>
+                    <label for="login-FName">First Name:</label>
+                    <input id="login-FName" type="text" name="First Name"><br><br>
+                    <label for="login-LName">Last Name:</label>
+                    <input id="login-LName" type="text" name="Last Name"><br><br>
+                    <label for="register-username">Create Username:</label> 
+                    <input type="text" id="register-username" required><br><br>
+                    <label for="register-password">Create Password:</label> 
+                    <input type="password" id="register-password" required><br><br>
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" required><br><br>
+                    <input type="submit" value="Register">
+                    <input type="reset" value="Reset">
+                </fieldset>
+            </form>
+            <p>Already have an account? <a href="index.html" id="show-login">Login here</a></p>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
+    </div>
+</body>
+</html>

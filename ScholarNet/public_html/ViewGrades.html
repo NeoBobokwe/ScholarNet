@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet - Grades</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('images/ScholarNetLogo.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-attachment: fixed;  
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            text-align: right;
+            background-color: darkcyan;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        a:active {    
+            color: powderblue;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 5px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            font-style: oblique;
+        }
+        #container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 250px;
+            height: auto;
+        }
+        .header, .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .header h1, .footer p {
+            margin: 0;
+        }
+        .footer p {
+            font-size: 14px;
+        }
+        .grade-container {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            gap: 25px;
+            
+        }
+        .grade-image {
+            width: 250px;
+            height: auto;
+            cursor: pointer;
+            border: 5px double #333;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .grade-image:hover {
+            transform: scale(1.1);
+        }
+        h1 {
+            text-align: left;
+            font-style: oblique;
+            font-size: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo"> -->
+    <h1>ScholarNet.</h1>
+    <nav>
+        <font face="conzel">
+            <a href="ViewGrades.html">View Grades</a> || 
+            <a href="ViewDownloads.html">View Materials</a> || 
+            <a href="Tutorials.html">Tutorials</a> || 
+            <a href="AboutUs.html">About Us</a> || 
+            <a href="Register.html">Login/Register</a> 
+        </font>
+    </nav>
+    <div id="container">
+        <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
+        <!-- Grades Page -->
+        <div id="grades-page" class="Grades-page">
+            <h2>Grades</h2>
+            <p>Welcome! <br>Select your grade to view subject materials:</p>
+            <div class="grade-container">
+                <a href="ViewSubjects.html?grade=8">
+                    <img src="images/grade8.jpeg" alt="Grade 8" class="grade-image">
+                </a>
+                <a href="ViewSubjects.html?grade=9">
+                    <img src="images/grade9.jpeg" alt="Grade 9" class="grade-image">
+                </a>
+                <a href="ViewSubjects.html?grade=10">
+                    <img src="images/grade10.jpeg" alt="Grade 10" class="grade-image">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
+    </div>
+</body>
+</html>

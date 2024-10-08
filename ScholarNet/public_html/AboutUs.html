@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ScholarNet</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            background-image: url('images/ScholarNetLogo.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-attachment: fixed; 
+        }
+        #container {
+            max-width: 1200px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 150px;
+            height: auto;
+        }
+        nav {
+            text-align: right;
+            background-color: darkcyan;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        a:active {    
+            color: powderblue;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 5px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            font-style: oblique;
+        }
+        h1 {
+            text-align: left;
+            font-style: oblique;
+            font-size: 20px;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section img {
+            float: right;
+            margin: 0 0 20px 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: 5px double #333;
+            transition: transform 0.2s;
+        }
+        .section img:hover {
+            transform: scale(1.1);
+        }
+        .clear {
+            clear: both;
+        }
+        .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        .footer p {
+            font-size: 14px;
+            margin: 0; 
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo"> -->
+    <h1>ScholarNet.</h1>
+    <nav>
+        <font face="conzel">
+            <a href="ViewGrades.html">View Grades</a> || 
+            <a href="ViewDownloads.html">View Materials</a> || 
+            <a href="Tutorials.html">Tutorials</a> || 
+            <a href="AboutUs.html">About Us</a> || 
+            <a href="Register.html">Login/Register</a> 
+        </font>
+    </nav>
+
+    <div id="container">
+        <h1>About ScholarNet</h1>
+        <div class="section">
+            <h2>Our Mission</h2>
+            <p>At ScholarNet, our mission is to revolutionize the learning experience for high school students. We believe in bridging the gap between classroom learning and self-study by providing a reliable and accessible digital platform. Our goal is to empower students to deepen their understanding of various subjects, improve their academic performance, and develop effective study habits that will serve them well throughout their educational journey and beyond.</p>
+        </div>
+
+        <div class="section">
+            <h2>What We Offer</h2>
+            <img src="images/whatweoffer.jpeg" alt="Educational Resources">
+            <p>ScholarNet offers an extensive range of educational resources tailored to the high school curriculum. Our app provides students with comprehensive access to:</p>
+            <ul>
+                <li><strong>Textbooks:</strong> A wide selection of textbooks covering various subjects and grades, all available in digital format for easy access and portability.</li>
+                <li><strong>Detailed Notes:</strong> Expertly crafted notes that highlight key concepts and provide detailed explanations to aid in understanding and retention.</li>
+                <li><strong>Past Papers:</strong> A collection of past examination papers to help students practice and prepare effectively for their exams.</li>
+            </ul>
+            <p>With these resources, students can engage in self-paced learning, allowing them to study and revise at their own convenience, reinforcing classroom learning with supplementary materials.</p>
+        </div>
+
+        <div class="section">
+            <h2>Why Choose ScholarNet?</h2>
+            <p>ScholarNet is designed with the student in mind. Here’s why our platform stands out:</p>
+            <ul>
+                <li><strong>Accessibility:</strong> Our app is available on multiple devices, ensuring that students can access their study materials anytime, anywhere.</li>
+                <li><strong>Comprehensive Coverage:</strong> We cover a wide range of subjects and grades, making ScholarNet a one-stop solution for all high school students.</li>
+                <li><strong>Easy to Use:</strong> Our user-friendly interface makes it easy for students to navigate and find the resources they need without any hassle.</li>
+                <li><strong>Supportive Community:</strong> ScholarNet fosters a community of learners who can share tips, resources, and support each other in their academic journey.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Our Vision</h2>
+            <img src="images/ourvision.jpeg" alt="Our Vision">
+            <p>At ScholarNet, we envision a future where every student, regardless of their background or circumstances, has equal access to quality education. We strive to break down barriers to learning and create opportunities for all individuals to thrive academically.</p>
+            <p>Our vision extends beyond academic success; we aim to nurture well-rounded individuals who are equipped with the knowledge, skills, and mindset to contribute positively to society. We believe that education is not only about acquiring knowledge but also about fostering critical thinking, creativity, and empathy.</p>
+            <p>Through continuous innovation and collaboration with educators, students, and other stakeholders, we aspire to redefine the educational landscape and empower future generations to reach their full potential. Together, we can build a brighter future where education is a catalyst for positive change.</p>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
+    </div>
+</body>
+</html>
