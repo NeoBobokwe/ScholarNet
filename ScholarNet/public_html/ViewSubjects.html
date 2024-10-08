@@ -116,16 +116,13 @@
     </style>
 </head>
 <body>
-    <!-- <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo"> -->
     <h1>ScholarNet.</h1>
     <nav>
-        <font face="conzel">
-            <a href="ViewGrades.html">View Grades</a> || 
-            <a href="ViewDownloads.html">View Materials</a> || 
-            <a href="Tutorials.html">Tutorials</a> || 
-            <a href="AboutUs.html">About Us</a> || 
-            <a href="Register.html">Login/Register</a> 
-        </font>
+        <a href="ViewGrades.html">View Grades</a> || 
+        <a href="ViewDownloads.html">View Materials</a> || 
+        <a href="Tutorials.html">Tutorials</a> || 
+        <a href="AboutUs.html">About Us</a> || 
+        <a href="Register.html">Login/Register</a>
     </nav>
     <div id="container">
         <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
@@ -151,24 +148,89 @@
         // Display selected grade
         document.getElementById('selected-grade').textContent = grade;
 
+        // Subject Materials organized by grade
         const pdfs = {
-            '8': ['pdfs/Grade 8 English FAL P2 2017.pdf', 'pdfs/Grade 8 English HL P1 November 2017 Memo.pdf', 'pdfs/Grade 8 English HL P1 November 2017 nov.pdf', 'pdfs/Grade 8 English HL P2 June 2017 Memo.pdf', 'pdfs/Grade 8 English HL P2 June 2017.pdf', 'pdfs/Grade 8 Geo  June 2019 Memo.pdf', 'pdfs/Grade 8 Geo  June 2019.pdf', 'pdfs/Grade 8 Geo November 2016 Memo.pdf', 'pdfs/Grade 8 Geo November 2016.pdf', 'pdfs/Grade 8 Maths June 2019 Memo.pdf', 'pdfs/Grade 8 Maths June 2019.pdf'],
-            '9': ['pdfs/Grade 9 MATH (ENG & AFR) June 2022 Memo.pdf', 'pdfs/Grade 9 MATH (ENG) June 2022.pdf', 'pdfs/Grade 9 Math P1 (Eng and Afr) November 2022 Memo.pdf', 'pdfs/Grade 9 Math P1 (Eng) November 2022.pdf', 'pdfs/Grade 9 November Eng P2 2018 EC.pdf', 'pdfs/Grade 9 November Eng P2 2018 Memo EC.pdf', 'pdfs/Grade 9 November Eng P2 2019 EC.pdf', 'pdfs/Grade 9 November Eng P2 2019 Memo EC.pdf', 'pdfs/Grade 9 NS (ENG) June 2022 Memo.pdf', 'pdfs/Grade 9 NS (ENG) June 2022.pdf', 'pdfs/Grade 9 NS (English) November 2022 Memo.pdf', 'pdfs/Grade 9 NS (English) November 2022.pdf' ],
-            '10': ['pdfs/Grade 10 Accounting P1 (English) 2023 Memo.pdf', 'pdfs/Grade 10 Accounting P1 (English) 2023.pdf', 'pdfs/Grade 10 Accounting P2 (English) November 2022 Memo.pdf', 'pdfs/Grade 10 Accounting P2 (English) November 2022.pdf', 'pdfs/Grade 10 MATH P1 (ENG) June 2022 Memo.pdf', 'pdfs/Grade 10 MATH P1 (ENG) June 2022.pdf', 'pdfs/Grade 10 MATH P2 (ENG & AFR) June 2022 Memo.pdf', 'pdfs/Grade 10 MATH P2 (ENG) June 2022.pdf', 'pdfs/Grade 10 PS P1 (English) November 2022 Memo.pdf', 'pdfs/Grade 10 PS P1 (English) November 2022.pdf', 'pdfs/Grade 10 PS P2 (English)  2023 Memo.pdf', 'pdfs/Grade 10 PS P2 (English)  2023.pdf']
+            '8': {
+                'English': [
+                    'pdfs/Grade 8 English FAL P2 2017.pdf', 
+                    'pdfs/Grade 8 English HL P1 November 2017 Memo.pdf', 
+                    'pdfs/Grade 8 English HL P1 November 2017 nov.pdf', 
+                    'pdfs/Grade 8 English HL P2 June 2017 Memo.pdf', 
+                    'pdfs/Grade 8 English HL P2 June 2017.pdf'
+                ],
+                'Geography': [
+                    'pdfs/Grade 8 Geo June 2019 Memo.pdf', 
+                    'pdfs/Grade 8 Geo June 2019.pdf', 
+                    'pdfs/Grade 8 Geo November 2016 Memo.pdf', 
+                    'pdfs/Grade 8 Geo November 2016.pdf'
+                ],
+                'Mathematics': [
+                    'pdfs/Grade 8 Maths June 2019 Memo.pdf', 
+                    'pdfs/Grade 8 Maths June 2019.pdf'
+                ]
+            },
+            '9': {
+                'Mathematics': [
+                    'pdfs/Grade 9 MATH (ENG & AFR) June 2022 Memo.pdf', 
+                    'pdfs/Grade 9 MATH (ENG) June 2022.pdf', 
+                    'pdfs/Grade 9 Math P1 (Eng and Afr) November 2022 Memo.pdf', 
+                    'pdfs/Grade 9 Math P1 (Eng) November 2022.pdf'
+                ],
+                'English': [
+                    'pdfs/Grade 9 November Eng P2 2018 EC.pdf', 
+                    'pdfs/Grade 9 November Eng P2 2018 Memo EC.pdf', 
+                    'pdfs/Grade 9 November Eng P2 2019 EC.pdf', 
+                    'pdfs/Grade 9 November Eng P2 2019 Memo EC.pdf'
+                ],
+                'Natural Sciences': [
+                    'pdfs/Grade 9 NS (ENG) June 2022 Memo.pdf', 
+                    'pdfs/Grade 9 NS (ENG) June 2022.pdf', 
+                    'pdfs/Grade 9 NS (English) November 2022 Memo.pdf', 
+                    'pdfs/Grade 9 NS (English) November 2022.pdf'
+                ]
+            },
+            '10': {
+                'Accounting': [
+                    'pdfs/Grade 10 Accounting P1 (English) 2023 Memo.pdf', 
+                    'pdfs/Grade 10 Accounting P1 (English) 2023.pdf', 
+                    'pdfs/Grade 10 Accounting P2 (English) November 2022 Memo.pdf', 
+                    'pdfs/Grade 10 Accounting P2 (English) November 2022.pdf'
+                ],
+                'Mathematics': [
+                    'pdfs/Grade 10 MATH P1 (ENG) June 2022 Memo.pdf', 
+                    'pdfs/Grade 10 MATH P1 (ENG) June 2022.pdf', 
+                    'pdfs/Grade 10 MATH P2 (ENG & AFR) June 2022 Memo.pdf', 
+                    'pdfs/Grade 10 MATH P2 (ENG) June 2022.pdf'
+                ],
+                'Physical Sciences': [
+                    'pdfs/Grade 10 PS P1 (English) November 2022 Memo.pdf', 
+                    'pdfs/Grade 10 PS P1 (English) November 2022.pdf', 
+                    'pdfs/Grade 10 PS P2 (English) 2023 Memo.pdf', 
+                    'pdfs/Grade 10 PS P2 (English) 2023.pdf'
+                ]
+            }
         };
 
         // Retrieve PDFs for the selected grade
-        const selectedPdfs = pdfs[grade] || [];
+        const selectedSubjects = pdfs[grade] || {};
 
-        // Display PDFs in list form
+        // Display PDFs categorized by subject
         const subjectList = document.getElementById('subject-list');
-        selectedPdfs.forEach(pdf => {
-            const listItem = document.createElement('li');
-            const link = document.createElement('a');
-            link.href = pdf;
-            link.textContent = pdf.split('/').pop(); 
-            listItem.appendChild(link);
-            subjectList.appendChild(listItem);
+        Object.keys(selectedSubjects).forEach(subject => {
+            const subjectTitle = document.createElement('h3');
+            subjectTitle.textContent = subject;
+            subjectList.appendChild(subjectTitle);
+
+            const pdfList = document.createElement('ul');
+            selectedSubjects[subject].forEach(pdf => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = pdf;
+                link.textContent = pdf.split('/').pop();
+                listItem.appendChild(link);
+                pdfList.appendChild(listItem);
+            });
+            subjectList.appendChild(pdfList);
         });
 
         document.getElementById('back-to-grades').addEventListener('click', function() {
@@ -179,4 +241,5 @@
         });
     </script>
 </body>
+
 </html>
