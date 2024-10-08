@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScholarNet - Registration</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="style.css" type="text/css"/>
     <style>
         /* General styling */
@@ -91,15 +90,18 @@
             text-decoration: underline;
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
     <script>
         function registerValidate(event) {
             event.preventDefault(); // Prevent form submission
 
-            var firstName = document.getElementById("login-FName").value;
-            var lastName = document.getElementById("login-LName").value;
-            var email = document.getElementById("register-username").value;
-            var password = document.getElementById("register-password").value;
-            var confirmPassword = document.getElementById("confirm-password").value;
+            var firstName = document.getElementById("login-FName").value.trim();
+            var lastName = document.getElementById("login-LName").value.trim();
+            var email = document.getElementById("register-username").value.trim();
+            var password = document.getElementById("register-password").value.trim();
+            var confirmPassword = document.getElementById("confirm-password").value.trim();
 
             if (!firstName || !lastName || !email || !password || !confirmPassword) {
                 alert("Please fill in all fields");
@@ -118,20 +120,7 @@
                         alert("Error: " + error.message);
                     });
             }
-        }
-    </script>
-</head>
-<body>
-    <div class="header">
-        <h1>Welcome to ScholarNet</h1>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-    <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
+            const firebaseConfig = {
             apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
             authDomain: "scholarnet-aac06.firebaseapp.com",
             projectId: "scholarnet-aac06",
@@ -146,8 +135,14 @@
 
         // Firebase authentication
         const auth = firebase.auth();
+        }
     </script>
-
+    
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to ScholarNet</h1>
+    </div>
     <div id="container">
         <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
         <!-- Registration Page -->
@@ -176,5 +171,26 @@
     <div class="footer">
         <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>    
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
+            authDomain: "scholarnet-aac06.firebaseapp.com",
+            projectId: "scholarnet-aac06",
+            storageBucket: "scholarnet-aac06.appspot.com",
+            messagingSenderId: "598495007854",
+            appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
+            measurementId: "G-7FCFDP0HKK"
+        };
+    
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Firebase authentication
+        const auth = firebase.auth();
+    </script>
 </body>
 </html>
