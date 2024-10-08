@@ -94,17 +94,29 @@
     <script>
         function registerValidate(event) {
             event.preventDefault(); // Prevent form submission
+
             var firstName = document.getElementById("login-FName").value;
             var lastName = document.getElementById("login-LName").value;
-            var username = document.getElementById("register-username").value;
+            var email = document.getElementById("register-username").value;
             var password = document.getElementById("register-password").value;
             var confirmPassword = document.getElementById("confirm-password").value;
-            if (!firstName || !lastName || !username || !password || !confirmPassword) {
+
+            if (!firstName || !lastName || !email || !password || !confirmPassword) {
                 alert("Please fill in all fields");
             } else if (password !== confirmPassword) {
                 alert("Passwords do not match");
             } else {
-                window.location.href = "index.html";
+                // Firebase authentication to create a new user
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Successful registration
+                        alert("Registration successful! Please log in.");
+                        window.location.href = "index.html";
+                    })
+                    .catch((error) => {
+                        // Error handling
+                        alert("Error: " + error.message);
+                    });
             }
         }
     </script>
@@ -113,6 +125,29 @@
     <div class="header">
         <h1>Welcome to ScholarNet</h1>
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
+            authDomain: "scholarnet-aac06.firebaseapp.com",
+            projectId: "scholarnet-aac06",
+            storageBucket: "scholarnet-aac06.appspot.com",
+            messagingSenderId: "598495007854",
+            appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
+            measurementId: "G-7FCFDP0HKK"
+        };
+    
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Firebase authentication
+        const auth = firebase.auth();
+    </script>
+
     <div id="container">
         <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
         <!-- Registration Page -->
