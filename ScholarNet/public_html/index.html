@@ -18,8 +18,6 @@
             background-repeat: no-repeat; 
             background-position: center center; 
             background-attachment: fixed;   
-            margin: 0;
-            padding: 0;
         }
         #container {
             max-width: 500px;
@@ -90,22 +88,41 @@
             text-decoration: underline;
         }
     </style>
-    <script>
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
+            authDomain: "scholarnet-aac06.firebaseapp.com",
+            projectId: "scholarnet-aac06",
+            storageBucket: "scholarnet-aac06.appspot.com",
+            messagingSenderId: "598495007854",
+            appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
+            measurementId: "G-7FCFDP0HKK"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
         function loginValidate(event) {
             event.preventDefault(); // Prevent form submission
 
-            var email = document.getElementById("login-username").value;
-            var password = document.getElementById("login-password").value;
+            var email = document.getElementById("login-email").value.trim(); // Corrected ID
+            var password = document.getElementById("login-password").value.trim();
 
             if (!email || !password) {
                 alert("Please fill in all fields");
-            }  else {
+            } else {
                 // Firebase authentication to sign in the user
-                auth.signInWithEmailAndPassword(email, password)
+                signInWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         // Successful login
                         alert("Login successful!");
-                        window.location.href = "ViewGrades.html";
+                        window.location.href = "ViewGrades.html"; // Redirect to another page upon successful login
                     })
                     .catch((error) => {
                         // Error handling
@@ -119,29 +136,6 @@
     <div class="header">
         <h1>Welcome to ScholarNet</h1>
     </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-    <script>
-          // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
-            authDomain: "scholarnet-aac06.firebaseapp.com",
-            projectId: "scholarnet-aac06",
-            storageBucket: "scholarnet-aac06.appspot.com",
-            messagingSenderId: "598495007854",
-            appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
-            measurementId: "G-7FCFDP0HKK"
-        };
-    
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        // Firebase authentication
-        const auth = firebase.auth();
-    </script>
-
     <div id="container">
         <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
         <!-- Login Page -->
@@ -150,8 +144,8 @@
             <form id="login-form" onsubmit="loginValidate(event)">
                 <fieldset>
                     <legend></legend>
-                    <label for="login-username">Username:</label>
-                    <input id="login-username" type="text" name="Username" required><br><br>
+                    <label for="login-email">Email:</label>
+                    <input id="login-email" type="text" name="email" required><br><br>
                     <label for="login-password">Password:</label>
                     <input id="login-password" type="password" name="password" required><br><br>
                     <input type="submit" value="Login">
