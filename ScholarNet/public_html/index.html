@@ -108,27 +108,36 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+        // This function handles form submission
         function loginValidate(event) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault(); // Prevent default form submission
 
-            var email = document.getElementById("login-email").value.trim(); // Corrected ID
+            // Get email and password from input fields
+            var email = document.getElementById("login-email").value.trim();
             var password = document.getElementById("login-password").value.trim();
 
+            // Debug logging
+            console.log("Attempting to log in with:", { email, password }); 
+
+            // Validate inputs
             if (!email || !password) {
                 alert("Please fill in all fields");
-            } else {
-                // Firebase authentication to sign in the user
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        // Successful login
-                        alert("Login successful!");
-                        window.location.href = "ViewGrades.html"; // Redirect to another page upon successful login
-                    })
-                    .catch((error) => {
-                        // Error handling
-                        alert("Error: " + error.message);
-                    });
+                return; // Exit if fields are empty
             }
+
+            // Firebase authentication to sign in the user
+            signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Successful login
+                    console.log("Login successful:", userCredential);
+                    alert("Login successful!");
+                    window.location.href = "ViewGrades.html"; // Redirect to another page upon successful login
+                })
+                .catch((error) => {
+                    // Error handling
+                    console.error("Login error:", error); // Log the error
+                    alert("Error: " + error.message);
+                });
         }
     </script>
 </head>
