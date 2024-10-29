@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScholarNet</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <style>
         /* General styling */
         body {
@@ -14,14 +14,13 @@
             margin: 0;
             padding: 0;
             color: #333;
-            background-image: url('images/ScholarNetLogo.jpg'); 
-            background-size: cover; 
-            background-repeat: no-repeat; 
-            background-position: center center; 
-            background-attachment: fixed;   
-            margin: 0;
-            padding: 0;
+            background-image: url('images/ScholarNetLogo.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
         }
+
         #container {
             max-width: 500px;
             margin: 50px auto;
@@ -30,37 +29,48 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .logo {
             display: block;
             margin: 20px auto;
             width: 250px;
             height: auto;
         }
-        .header, .footer {
+
+        .header,
+        .footer {
             background-color: darkcyan;
             color: white;
             text-align: center;
             padding: 15px 0;
         }
-        .header h1, .footer p {
+
+        .header h1,
+        .footer p {
             margin: 0;
         }
+
         .footer p {
             font-size: 14px;
         }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-        input[type="text"], input[type="password"] {
+
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
         }
-        input[type="submit"], input[type="reset"] {
+
+        input[type="submit"],
+        input[type="reset"] {
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -69,63 +79,40 @@
             cursor: pointer;
             font-size: 16px;
         }
-        input[type="submit"]:hover, input[type="reset"]:hover {
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
             background-color: darkslategray;
         }
+
         fieldset {
             border: none;
             padding: 0;
         }
+
         label {
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .form-container p {
             margin-top: 20px;
         }
+
         .form-container p a {
             color: darkcyan;
             text-decoration: none;
         }
+
         .form-container p a:hover {
             text-decoration: underline;
         }
     </style>
-    <script>
-        function loginValidate(event) {
-            event.preventDefault(); // Prevent form submission
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 
-            var email = document.getElementById("login-username").value;
-            var password = document.getElementById("login-password").value;
-
-            if (!email || !password) {
-                alert("Please fill in all fields");
-            }  else {
-                // Firebase authentication to sign in the user
-                auth.signInWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        // Successful login
-                        alert("Login successful!");
-                        window.location.href = "ViewGrades.html";
-                    })
-                    .catch((error) => {
-                        // Error handling
-                        alert("Error: " + error.message);
-                    });
-            }
-        }
-    </script>
-</head>
-<body>
-    <div class="header">
-        <h1>Welcome to ScholarNet</h1>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-    <script>
-          // Your web app's Firebase configuration
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
             authDomain: "scholarnet-aac06.firebaseapp.com",
@@ -135,14 +122,41 @@
             appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
             measurementId: "G-7FCFDP0HKK"
         };
-    
+
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-        // Firebase authentication
-        const auth = firebase.auth();
+        // This function handles form submission for login
+        window.loginValidate = function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get email and password from input fields
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value.trim();
+
+            if (!email || !password) {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            // Firebase authentication to sign in the user
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("Login successful!");
+                    window.location.href = "ViewGrades.html";
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
+                });
+        }
     </script>
+</head>
 
+<body>
+    <div class="header">
+        <h1>Welcome to ScholarNet</h1>
+    </div>
     <div id="container">
         <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo">
         <!-- Login Page -->
@@ -151,8 +165,8 @@
             <form id="login-form" onsubmit="loginValidate(event)">
                 <fieldset>
                     <legend></legend>
-                    <label for="login-username">Username:</label>
-                    <input id="login-username" type="text" name="Username" required><br><br>
+                    <label for="login-email">Email:</label>
+                    <input id="login-email" type="text" name="email" required><br><br>
                     <label for="login-password">Password:</label>
                     <input id="login-password" type="password" name="password" required><br><br>
                     <input type="submit" value="Login">
@@ -166,4 +180,5 @@
         <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
     </div>
 </body>
+
 </html>
