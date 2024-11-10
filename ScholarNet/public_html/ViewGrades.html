@@ -98,6 +98,50 @@
             font-size: 16px;
         }
     </style>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
+        authDomain: "scholarnet-aac06.firebaseapp.com",
+        projectId: "scholarnet-aac06",
+        storageBucket: "scholarnet-aac06.appspot.com",
+        messagingSenderId: "598495007854",
+        appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
+        measurementId: "G-7FCFDP0HKK"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            // Get user data from Firestore
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                const userGrade = userData.grade;
+                
+                // Dynamically display the grade image based on user grade
+                const gradeContainer = document.getElementById("grade-container");
+                gradeContainer.innerHTML = `
+                    <a href="ViewSubjects.html?grade=${userGrade}">
+                        <img src="images/grade${userGrade}.jpeg" alt="Grade ${userGrade}" class="grade-image">
+                    </a>`;
+            } else {
+                alert("User data not found.");
+            }
+        } else {
+            alert("Please log in.");
+            window.location.href = "index.html"; // Redirect to login if not authenticated
+        }
+    });
+</script>
+
 </head>
 <body>
     <!-- <img src="images/ScholarNetLogo.jpg" alt="ScholarNet Logo" class="logo"> -->
@@ -118,7 +162,20 @@
         <div id="grades-page" class="Grades-page">
             <h2>Grades</h2>
             <p>Welcome! <br>Select your grade to view subject materials:</p>
-            <div class="grade-container">
+            <div class="grade-container" id="grade-container">
+                
+                
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.<br> <a href="AdminDashboard.html">Administrator</a></p>
+    </div>
+</body>
+</html>
+
+
+<!-- Code to separate the grade's material
                 <a href="ViewSubjects.html?grade=8">
                     <img src="images/grade8.jpeg" alt="Grade 8" class="grade-image">
                 </a>
@@ -127,12 +184,5 @@
                 </a>
                 <a href="ViewSubjects.html?grade=10">
                     <img src="images/grade10.jpeg" alt="Grade 10" class="grade-image">
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="footer">
-        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
-    </div>
-</body>
-</html>
+                </a> 
+-->

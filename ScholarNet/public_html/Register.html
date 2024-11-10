@@ -119,11 +119,12 @@
     
             var firstName = document.getElementById("login-FName").value.trim();
             var lastName = document.getElementById("login-LName").value.trim();
+            var grade = document.getElementById("grade").value;
             var email = document.getElementById("register-email").value.trim();
             var password = document.getElementById("register-password").value.trim();
             var confirmPassword = document.getElementById("confirm-password").value.trim();
     
-            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+            if (!firstName || !lastName || !grade || !email || !password || !confirmPassword) {
                 alert("Please fill in all fields");
             } else if (password !== confirmPassword) {
                 alert("Passwords do not match");
@@ -138,6 +139,7 @@
                         await setDoc(doc(db, "users", user.uid), {
                             firstName: firstName,
                             lastName: lastName,
+                            grade: grade,
                             email: email,
                             role: "user" // Default role is "user"
                         });
@@ -170,6 +172,15 @@
                     <input id="login-FName" type="text" name="First Name"><br><br>
                     <label for="login-LName">Last Name:</label>
                     <input id="login-LName" type="text" name="Last Name"><br><br>
+
+                    <label for="grade">Select Grade:</label>
+                    <select id="grade" required>
+                        <option value="">Select Grade</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                    </select><br><br>
+
                     <label for="register-email">Email:</label>
                     <input id="register-email" type="text" name="email" required><br><br>
                     <label for="register-password">Create Password:</label> 
