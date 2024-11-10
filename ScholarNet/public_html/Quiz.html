@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet - Quiz</title>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        body { font-family: Arial, sans-serif; background: #e0f7fa; margin: 0; padding: 0; }
+        .quiz-container { max-width: 600px; margin: 50px auto; padding: 20px; background: #ffffff; border-radius: 10px; }
+        .quiz-question { font-size: 1.2em; }
+        .quiz-options { margin-top: 15px; }
+        .quiz-options button { margin: 5px 0; padding: 10px; width: 100%; cursor: pointer; }
+        .next-button { margin-top: 20px; background: darkcyan; color: white; padding: 10px; border: none; cursor: pointer; }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = { /* your Firebase config */ };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let gradeLevel = null;
+        let questions = [];
+        let currentQuestionIndex = 0;
+
+        // Get user's grade from Firestore
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                gradeLevel = userDoc.exists() ? userDoc.data().grade : null;
+                loadQuizQuestions();
+            } else {
+                alert("You need to be logged in to take the quiz.");
+                window.location.href = "index.html";
+            }
+        });
+
+        // Fetch questions from Firestore for the user's grade level
+        async function loadQuizQuestions() {
+            if (!gradeLevel) return;
+
+            const quizQuery = query(collection(db, "quizzes"), where("grade", "==", gradeLevel));
+            const querySnapshot = await getDocs(quizQuery);
+
+            questions = querySnapshot.docs.map((doc) => doc.data());
+            displayQuestion();
+        }
+
+        // Display current question and options
+        function displayQuestion() {
+            const questionData = questions[currentQuestionIndex];
+            if (!questionData) {
+                document.getElementById("question-container").innerHTML = "<p>No more questions!</p>";
+                return;
+            }
+
+            document.getElementById("question").innerText = questionData.question;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            questionData.options.forEach((option, index) => {
+                const optionButton = document.createElement("button");
+                optionButton.innerText = option;
+                optionButton.onclick = () => checkAnswer(option, questionData.correctAnswer);
+                optionsDiv.appendChild(optionButton);
+            });
+        }
+
+        // Check the answer and move to the next question
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                alert("Correct!");
+            } else {
+                alert(`Incorrect. The correct answer is: ${correct}`);
+            }
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        // Load next question
+        function loadNextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+    </script>
+</head>
+<body>
+    <h1>ScholarNet.</h1>
+    <nav>
+        <font face="conzel">
+            <a href="ViewGrades.html">View Grades</a> || 
+            <a href="ViewDownloads.html">View Materials</a> || 
+            <a href="Tutorials.html">Tutorials</a> || 
+            <a href="AboutUs.html">About Us</a> ||
+            <a href="Contact.html">Contact Us</a> || 
+            <a href="index.html">Logout</a> 
+        </font>
+    </nav>
+
+    <div class="quiz-container">
+        <h2>Quiz</h2>
+        <div id="question-container">
+            <p id="question" class="quiz-question"></p>
+            <div id="options" class="quiz-options"></div>
+            <button id="next" class="next-button" onclick="loadNextQuestion()">Next Question</button>
+
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.<br> <a href="AdminDashboard.html">Administrator</a></p>
+    </div>
+</body>
+</html>
