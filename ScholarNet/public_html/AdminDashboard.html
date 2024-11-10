@@ -17,6 +17,25 @@
             background-position: center center; 
             background-attachment: fixed; 
         }
+        nav {
+            text-align: right;
+            background-color: darkcyan;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        a:active {    
+            color: powderblue;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            margin-right: 5px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            font-style: oblique;
+        }
         .header {
             background-color: darkcyan;
             color: white;
@@ -84,10 +103,17 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <h1>Admin Dashboard - ScholarNet</h1>
-    </div>
+    <h1>ScholarNet.</h1>
+    <nav>
+        <font face="conzel">
+            <a href="ViewGrades.html">View Grades</a> || 
+            <a href="ViewDownloads.html">View Materials</a> || 
+            <a href="Tutorials.html">Tutorials</a> || 
+            <a href="AboutUs.html">About Us</a> ||
+            <a href="Contact.html">Contact Us</a> || 
+            <a href="index.html">Logout</a> 
+        </font>
+    </nav>
 
     <!-- Dashboard Container -->
     <div id="dashboard-container">
@@ -190,20 +216,36 @@
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const fileRef = ref(storage, `files/${file.name}`);
-                await uploadBytes(fileRef, file);
-                fileURL = await getDownloadURL(fileRef);
+
+                // Upload file to Firebase Storage
+                try {
+                    await uploadBytes(fileRef, file);
+                    fileURL = await getDownloadURL(fileRef);
+                    console.log("File uploaded successfully, URL:", fileURL);
+                } catch (error) {
+                    console.error("Error uploading file:", error);
+                    alert("There was an error uploading the file. Please try again.");
+                    return; // Stop further execution if file upload fails
+                }
+            } else {
+                alert("Please select a file to upload.");
+                return; // Stop further execution if no file is selected
             }
 
             // Add data to Firestore
-            await addDoc(dataCollection, {
-                title: title,
-                description: description,
-                fileURL: fileURL, // Ensure the fileURL is stored
-                timestamp: new Date()
-            });
-
-            alert("Data added successfully!");
-            displayData();
+            try {
+                await addDoc(dataCollection, {
+                    title: title,
+                    description: description,
+                    fileURL: fileURL,
+                    timestamp: new Date()
+                });
+                alert("Data added successfully!");
+                displayData();
+            } catch (error) {
+                console.error("Error adding data to Firestore:", error);
+                alert("There was an error adding data to the database. Please try again.");
+            }
         }
 
         // Function to display data
