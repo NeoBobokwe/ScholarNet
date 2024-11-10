@@ -18,14 +18,11 @@
             background-position: center center; 
             background-attachment: fixed; 
         }
-        .header, .footer {
-            background-color: darkcyan;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-        }
-        .header h1, .footer p {
-            margin: 0;
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 150px;
+            height: auto;
         }
         nav {
             text-align: right;
@@ -45,6 +42,21 @@
         nav a:hover {
             text-decoration: underline;
             font-style: oblique;
+        }
+        h1 {
+            text-align: left;
+            font-style: oblique;
+            font-size: 20px;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
         }
         #contact-container {
             max-width: 800px;
@@ -98,33 +110,45 @@
         .contact-form input[type="submit"]:hover {
             background-color: darkslategray;
         }
+        .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        .footer p {
+            font-size: 14px;
+            margin: 0; 
+            text-align: center;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>ScholarNet.</h1>
-    </div>
+    <h1>ScholarNet.</h1>
     <nav>
         <font face="conzel">
             <a href="ViewGrades.html">View Grades</a> || 
             <a href="ViewDownloads.html">View Materials</a> || 
             <a href="Tutorials.html">Tutorials</a> || 
-            <a href="AboutUs.html">About Us</a> || 
-            <a href="contact.html">Contact Us</a> || 
-            <a href="Register.html">Login/Register</a> 
+            <a href="AboutUs.html">About Us</a> ||
+            <a href="Contact.html">Contact Us</a> || 
+            <a href="index.html">Logout</a> 
         </font>
     </nav>
 
     <!-- Contact Us Section -->
     <div id="contact-container">
-        <h2>Contact Us</h2>
+        <h1>Contact Us</h1>
         <div class="contact-info">
-            <h3>Get in Touch</h3>
+            <h2>Get in Touch</h2>
             <p>If you have any questions or need support, please reach out to us using the form below or through our contact details.</p>
+            <br>
             <p><strong>Email:</strong> support@scholarnet.com</p>
             <p><strong>Phone:</strong> +27 123 456 789</p>
-            <p><strong>Address:</strong> 123 ScholarNet Ave, Cape Town, South Africa</p>
+            <p><strong>Address:</strong> 123 ScholarNet Ave, Joburg, South Africa</p>
         </div>
         
         <!-- Contact Form -->
@@ -144,7 +168,7 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p>&copy; 2024 ScholarNet. All rights reserved. Ts & Cs apply.</p>
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
     </div>
 
     <script>

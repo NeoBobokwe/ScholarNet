@@ -91,8 +91,8 @@
             text-decoration: underline;
         }
     </style>
+
     <script type="module">
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
             authDomain: "scholarnet-aac06.firebaseapp.com",
@@ -102,25 +102,27 @@
             appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
             measurementId: "G-7FCFDP0HKK"
         };
-
+    
         // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-
+        import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-
+        const db = getFirestore(app);
+    
         // Register function
         window.registerValidate = function (event) {
             event.preventDefault(); // Prevent form submission
-
+    
             var firstName = document.getElementById("login-FName").value.trim();
             var lastName = document.getElementById("login-LName").value.trim();
             var email = document.getElementById("register-email").value.trim();
             var password = document.getElementById("register-password").value.trim();
             var confirmPassword = document.getElementById("confirm-password").value.trim();
-
+    
             if (!firstName || !lastName || !email || !password || !confirmPassword) {
                 alert("Please fill in all fields");
             } else if (password !== confirmPassword) {
@@ -128,10 +130,21 @@
             } else {
                 // Firebase authentication to create a new user
                 createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
+                    .then(async (userCredential) => {
+                        // Get user UID
+                        const user = userCredential.user;
+                        
+                        // Store user data in Firestore with default role as "user"
+                        await setDoc(doc(db, "users", user.uid), {
+                            firstName: firstName,
+                            lastName: lastName,
+                            email: email,
+                            role: "user" // Default role is "user"
+                        });
+    
                         // Successful registration
                         alert("Registration successful! Please log in.");
-                        window.location.href = "index.html";
+                        window.location.href = "index.html"; // Redirect to login page
                     })
                     .catch((error) => {
                         // Error handling

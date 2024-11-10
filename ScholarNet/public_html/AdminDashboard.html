@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet - Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #85b0cc;
+            margin: 0;
+            padding: 0;
+            background-image: url('images/ScholarNetLogo.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat; 
+            background-position: center center; 
+            background-attachment: fixed; 
+        }
+        .header {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        #dashboard-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: darkcyan;
+            text-align: center;
+        }
+        .form-section, .data-list {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="file"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: darkcyan;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: darkslategray;
+        }
+        .data-list div {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .footer {
+            background-color: darkcyan;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        .footer p {
+            font-size: 14px;
+            margin: 0; 
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Admin Dashboard - ScholarNet</h1>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div id="dashboard-container">
+        <h2>Manage Files and Data</h2>
+        
+        <!-- Add Data Section -->
+        <div class="form-section">
+            <h3>Add New Data</h3>
+            <form id="add-form">
+                <label for="add-title">Title:</label>
+                <input type="text" id="add-title" required>
+                
+                <label for="add-description">Description:</label>
+                <textarea id="add-description" required></textarea>
+                
+                <label for="add-file">Upload File:</label>
+                <input type="file" id="add-file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
+                
+                <button type="button" onclick="addData()">Add Data</button>
+            </form>
+        </div>
+
+        <!-- Modify and Delete Data Section -->
+        <div class="data-list" id="data-list">
+            <h3>Current Data</h3>
+            <!-- Data items will be listed here dynamically -->
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 ScholarNet.<br> All rights reserved.<br> Ts & Cs apply.</p>
+    </div>
+
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCkaLKYKXy0xVu-9zciDRxSCzqHDXZIj40",
+            authDomain: "scholarnet-aac06.firebaseapp.com",
+            projectId: "scholarnet-aac06",
+            storageBucket: "scholarnet-aac06.appspot.com",
+            messagingSenderId: "598495007854",
+            appId: "1:598495007854:web:4e8cfb846b5d4adeb8427f",
+            measurementId: "G-7FCFDP0HKK"
+        };
+
+        // Initialize Firebase and Firestore
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Reference to the collection
+        const dataCollection = collection(db, "scholarData");
+
+        // Function to add data
+        async function addData() {
+            const title = document.getElementById("add-title").value;
+            const description = document.getElementById("add-description").value;
+            const fileInput = document.getElementById("add-file");
+            
+            let fileURL = "";
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const fileRef = ref(storage, `files/${file.name}`);
+                await uploadBytes(fileRef, file);
+                fileURL = await getDownloadURL(fileRef);
+            }
+
+            // Add data to Firestore
+            await addDoc(dataCollection, {
+                title: title,
+                description: description,
+                fileURL: fileURL,
+                timestamp: new Date()
+            });
+
+            alert("Data added successfully!");
+            displayData();
+        }
+
+        // Function to display data
+        async function displayData() {
+            const dataList = document.getElementById("data-list");
+            dataList.innerHTML = ""; // Clear existing content
+            const querySnapshot = await getDocs(dataCollection);
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const dataDiv = document.createElement("div");
+                dataDiv.innerHTML = `
+                    <h4>${data.title}</h4>
+                    <p>${data.description}</p>
+                    ${data.fileURL ? `<a href="${data.fileURL}" target="_blank">View File</a>` : ""}
+                    <button onclick="editData('${doc.id}')">Edit</button>
+                    <button onclick="deleteData('${doc.id}')">Delete</button>
+                `;
+                dataList.appendChild(dataDiv);
+            });
+        }
+
+        // Function to delete data
+        async function deleteData(id) {
+            await deleteDoc(doc(db, "scholarData", id));
+            alert("Data deleted successfully!");
+            displayData();
+        }
+
+        // Function to edit data
+        async function editData(id) {
+            const newTitle = prompt("Enter new title:");
+            const newDescription = prompt("Enter new description:");
+            
+            if (newTitle && newDescription) {
+                const docRef = doc(db, "scholarData", id);
+                await updateDoc(docRef, {
+                    title: newTitle,
+                    description: newDescription,
+                    timestamp: new Date()
+                });
+                alert("Data updated successfully!");
+                displayData();
+            } else {
+                alert("Update cancelled.");
+            }
+        }
+
+        // Load data on page load
+        displayData();
+    </script>
+</body>
+</html>
