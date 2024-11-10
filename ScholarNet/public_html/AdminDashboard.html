@@ -124,6 +124,7 @@
     <script type="module">
         // Import Firebase modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
 
@@ -140,11 +141,42 @@
 
         // Initialize Firebase and Firestore
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
         // Reference to the collection
         const dataCollection = collection(db, "scholarData");
+
+        // Check if user is admin
+        function checkAdminAccess(user) {
+            const userDocRef = doc(db, "users", user.uid); // Reference to the user's document
+            getDoc(userDocRef).then((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const userData = docSnapshot.data();
+                    if (userData.role === "admin") {
+                        console.log("Access granted to admin dashboard.");
+                    } else {
+                        alert("Access denied: Admins only.");
+                        window.location.href = "index.html";
+                    }
+                } else {
+                    console.error("User document not found.");
+                }
+            }).catch((error) => {
+                console.error("Error fetching user data:", error);
+            });
+        }
+
+        // Check user authentication and role
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                checkAdminAccess(user);
+            } else {
+                alert("You must be signed in to access this page.");
+                window.location.href = "login.html";
+            }
+        });
 
         // Function to add data
         async function addData() {
